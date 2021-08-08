@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    command: /bin/sh -c "python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    volumes:
+      - ./app/:/usr/src/app/
+    ports:
+      - ${WEB_HOST_PORT}:8000
+    environment:
+      - WEB_HOST_PORT=${WEB_HOST_PORT}
+      - SECRET_KEY=${SECRET_KEY}
+      - ACCESS_TOKEN_LIFETIME_IN_MINUTES=${ACCESS_TOKEN_LIFETIME_IN_MINUTES}
+      - REFRESH_TOKEN_LIFETIME_IN_DAYS=${REFRESH_TOKEN_LIFETIME_IN_DAYS}
+      - SLIDING_TOKEN_LIFETIME_IN_MINUTES=${SLIDING_TOKEN_LIFETIME_IN_MINUTES}
+      - SLIDING_TOKEN_REFRESH_LIFETIME_IN_DAYS=${SLIDING_TOKEN_REFRESH_LIFETIME_IN_DAYS}
+      - TOKEN_EXPIRED_AFTER_SECONDS=${TOKEN_EXPIRED_AFTER_SECONDS}
+      - STATIC_ROOT=${STATIC_ROOT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13.2-alpine
+    restart: always
+    volumes:
+      - data-psql:/var/lib/postgresql/data/
+    ports:
+      - ${DB_PORT_EXTERNAL}:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+
+
+volumes:
+  data-psql:
