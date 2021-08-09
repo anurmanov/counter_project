@@ -24,7 +24,7 @@ POST       | /login | json с логином и паролем | строка 'o
 
 Проект написан на django с использованием базы данных PostgreSQL в качестве хранилища. 
 Деплоится через docker-compose up.
-Аутентификация на основе JSON Web Token с испольщованием библиотеки djangorestframework-simplejwt
+Аутентификация на основе JSON Web Token с использованием библиотеки djangorestframework-simplejwt
 
 После запуска приложения надо зайти в контейнер службы web и создать суперользователя 
 для того чтобы зайти в админку и добавить остальных пользователей:
@@ -36,7 +36,7 @@ docker exec -it counter_project_web_1 sh
 Use cases:
 --------------------
 
-1. Авторизация в системе:
+1. Аутентификация в системе:
 Запрос - curl -X POST -H "Content-Type: application/json" -d '{"username": "username", "password": "password"}' http://127.0.0.1:8001/login/
 В ответ получаем token, который нужен для доступа к защенным методам эндпоинта /count.
 
