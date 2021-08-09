@@ -5,7 +5,7 @@ from factories import UserFactory
 
 
 @pytest.mark.django_db
-def test_model_counter(monkeypatch):
+def test_model_counter():
     """В процессе теста создаем два счетчика,
     увеличиваем и уменьшаем их значения"""
 
