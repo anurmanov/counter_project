@@ -14,8 +14,7 @@ ENV PYTHONPATH=/usr/lib/python3.8/site-packages
 ENV DATABASE=postgres
 
 RUN apk update && \
-apk --no-cache add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev py3-numpy py3-pandas && \
-update-ca-certificates
+apk --no-cache add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev py3-numpy py3-pandas
 
 # Для сброса кэша перед выполнением pip install $(cat requirements.txt
 # example: build --build-arg CACHEBUST=$(date +%s)
